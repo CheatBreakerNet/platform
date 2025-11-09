@@ -25,6 +25,8 @@ public class FolderUtil {
             try {
                 switch (OS.current()) {
                     case MACOS:
+                    case LINUX:
+                    case SOLARIS:
                         Runtime.getRuntime().exec(new String[]{"/usr/bin/open", absolutePath});
                         break;
                     case WINDOWS:
