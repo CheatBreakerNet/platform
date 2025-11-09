@@ -1,0 +1,54 @@
+plugins {
+    id("java")
+    id("maven-publish")
+    id("com.diffplug.spotless") version "8.0.0"
+}
+
+val libraryName = property("library_name").toString()
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    val version = JavaVersion.VERSION_1_8
+    targetCompatibility = version
+    sourceCompatibility = version
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+// Header
+spotless {
+    val licenseHeader = rootProject.file("HEADER")
+    lineEndings = com.diffplug.spotless.LineEnding.UNIX
+
+    java {
+        licenseHeaderFile(licenseHeader)
+    }
+
+    kotlin {
+        licenseHeaderFile(licenseHeader)
+    }
+}
+
+// Maven Publishing
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = libraryName
+            group = project.group
+            version = project.version.toString()
+            from(components["java"])
+        }
+    }
+
+    repositories {
+    }
+}
