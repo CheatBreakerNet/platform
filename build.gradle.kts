@@ -12,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    val lombok = "org.projectlombok:lombok:${property("lombok_version")}"
+    compileOnly(lombok)
+    annotationProcessor(lombok)
 }
 
 java {
